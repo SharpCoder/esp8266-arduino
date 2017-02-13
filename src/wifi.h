@@ -7,17 +7,24 @@
 class Wifi {
   public:
     Wifi();
-    void connect(char* ssid, char* pwd);
+    char* buffer;
+    bool connect(char* ssid, char* pwd);
     void getStatus();
     void disconnect();
-    void reset();
-    void get(HttpMessage* message);
+    bool reset();
+    void send(HttpMessage* message);
+    void setHardwareResetPin(long pin);
+    void hardwareReset();
+    long getErrors();
     bool isConnected();
+    void initBuffer();
   private:
-    int errors = 0;
+    long errors = 0;
+    int hardwareResetPin = -1;
     bool connected;
     void blink(int count);
     bool sendUntil(char* command, char* target);
+    void handleError();
 };
 
 #endif
